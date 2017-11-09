@@ -12,19 +12,24 @@ namespace Standards_Converter.Controllers
         {
             return View();
         }
-
-        public ActionResult About()
+        [HttpPost]
+        public string StandartConvert(string services)
         {
-            ViewBag.Message = "Your application description page.";
 
-            return View();
+            return "Спасибо "+ services;
         }
 
-        public ActionResult Contact()
+        [HttpPost]
+        public ActionResult Upload(HttpPostedFileBase upload)
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            if (upload != null)
+            {
+                // получаем имя файла
+                string fileName = System.IO.Path.GetFileName(upload.FileName);
+                // сохраняем файл в папку Files в проекте
+                upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+            }
+            return RedirectToAction("Index");
         }
     }
 }
